@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<h2>Юзеры</h2>
+<a th:href="@{/}">На главную</a>
+<a th:href="@{/user}">Мои данные</a>
+<p></p>
+<table th:border="3">
+    <tr>
+        <th>id</th>
+        <th>Логин</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Пол</th>
+        <th>Телефон</th>
+        <th>e-mail</th>
+        <th>Роли</th>
+        <th>Действие</th>
+    </tr>
+    <tr th:each="user : ${usersList}">
+        <td th:utext="${user.id}"></td>
+        <td th:utext="${user.username}"></td>
+        <td th:utext="${user.firstName}"></td>
+        <td th:utext="${user.lastName}"></td>
+        <td th:utext="${user.gender}"></td>
+        <td th:utext="${user.phoneNo}"></td>
+        <td th:utext="${user.email}"></td>
+        <td>
+            <ul th:each="rol : ${user.getRole()}">
+                <li th:utext="${rol.getAuthority()}"></li>
+            </ul>
+        </td>
+        <td>
+            <a th:href="@{/edit/{userId}(userId=${user.id})}">Редактировать </a>
+            <p/>
+            <a th:href="@{/delete/{userId}(userId=${user.id})}">Удалить</a>
+        </td>
+    </tr>
+</table>
+<p></p>
+<a th:href="@{/add}">Новый пользователь</a>
+<p/>
+<a th:href="@{/logout}">Выйти</a>
+</body>
+</html>
