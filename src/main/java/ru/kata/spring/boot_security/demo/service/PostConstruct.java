@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import ru.kata.spring.boot_security.demo.model.Gender;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.repository.RoleCrudRepository;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -13,32 +14,35 @@ import java.util.Set;
 
 @Component
 public class PostConstruct {
-
-    private UserService userService;
-
     @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
+    private UserService userService;
+    @Autowired
+    private RoleCrudRepository roleCrudRepository;
 
     @javax.annotation.PostConstruct
     public void init() {
 
+        Role roleAdmin = new Role("ROLE_ADMIN");
+        roleCrudRepository.save(roleAdmin);
+        Role roleUser = new Role("ROLE_USER");
+        roleCrudRepository.save(roleUser);
+
+
         Set<Role> roleSet1 = new LinkedHashSet<>();
-        roleSet1.add(new Role("ROLE_USER"));
-        roleSet1.add(new Role("ROLE_ADMIN"));
+        roleSet1.add(roleAdmin);
+        roleSet1.add(roleUser);
 
         Set<Role> roleSet2 = new LinkedHashSet<>();
-        roleSet2.add(new Role("ROLE_USER"));
+        roleSet2.add(roleUser);
 
         Set<Role> roleSet3 = new LinkedHashSet<>();
-        roleSet2.add(new Role("ROLE_USER"));
+        roleSet3.add(roleUser);
 
         Set<Role> roleSet4 = new LinkedHashSet<>();
-        roleSet2.add(new Role("ROLE_USER"));
+        roleSet4.add(roleUser);
 
         Set<Role> roleSet5 = new LinkedHashSet<>();
-        roleSet2.add(new Role("ROLE_USER"));
+        roleSet5.add(roleUser);
 
 
         userService.saveUser(new User("Иван", "Петров", Gender.male, "+79050987654", "ivan@mail.ru", "ivan", "ivan", roleSet1));
