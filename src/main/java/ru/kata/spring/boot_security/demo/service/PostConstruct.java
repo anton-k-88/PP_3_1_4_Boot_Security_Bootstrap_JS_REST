@@ -3,12 +3,13 @@ package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.kata.spring.boot_security.demo.model.Gender;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleCrudRepository;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -27,29 +28,23 @@ public class PostConstruct {
         Role roleUser = new Role("ROLE_USER");
         roleCrudRepository.save(roleUser);
 
-
-        Set<Role> roleSet1 = new LinkedHashSet<>();
+        List<Role> roleSet1 = new ArrayList<>();
         roleSet1.add(roleAdmin);
         roleSet1.add(roleUser);
-
-        Set<Role> roleSet2 = new LinkedHashSet<>();
+        List<Role> roleSet2 = new ArrayList<>();
         roleSet2.add(roleUser);
-
-        Set<Role> roleSet3 = new LinkedHashSet<>();
+        List<Role> roleSet3 = new ArrayList<>();
         roleSet3.add(roleUser);
-
-        Set<Role> roleSet4 = new LinkedHashSet<>();
+        List<Role> roleSet4 = new ArrayList<>();
         roleSet4.add(roleUser);
-
-        Set<Role> roleSet5 = new LinkedHashSet<>();
+        List<Role> roleSet5 = new ArrayList<>();
         roleSet5.add(roleUser);
 
-
-        userService.saveUser(new User("Иван", "Петров", Gender.male, "+79050987654", "ivan@mail.ru", "ivan", "ivan", roleSet1));
-        userService.saveUser(new User("Петр", "Ольгин", Gender.male, "+79031234567", "petr@mail.ru", "petr", "petr", roleSet2));
-        userService.saveUser(new User("Ольга", "Игорева", Gender.female, "+79265545544", "olga@mail.ru", "olga", "olga", roleSet3));
-        userService.saveUser(new User("Игорь", "Алимов", Gender.male, "+79234446688", "igor@mail.ru", "igor", "igor", roleSet4));
-        userService.saveUser(new User("Алина", "Аревадзе", Gender.female, "+74957772211", "alina@mail.ru", "alina", "alina", roleSet5));
+        userService.saveUser(new User("Иван", "Петров", 18, "ivan@mail.ru", "ivan", roleSet1));
+        userService.saveUser(new User("Петр", "Ольгин", 19, "petr@mail.ru", "petr", roleSet2));
+        userService.saveUser(new User("Ольга", "Игорева", 20, "olga@mail.ru", "olga", roleSet3));
+        userService.saveUser(new User("Игорь", "Алимов", 21, "igor@mail.ru", "igor", roleSet4));
+        userService.saveUser(new User("Алина", "Аревадзе", 22, "alina@mail.ru", "alina", roleSet5));
     }
 
 

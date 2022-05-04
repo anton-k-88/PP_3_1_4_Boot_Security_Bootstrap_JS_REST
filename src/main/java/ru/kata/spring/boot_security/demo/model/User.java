@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 
@@ -17,43 +18,30 @@ public class User implements UserDetails {
     private Long id;
     private String firstName;
     private String lastName;
-    private Gender gender;
-    private String phoneNo;
+    private int Age;
     private String email;
-    @Column(nullable = false)
-    private String username;
     @Column(nullable = false)
     private String password;
     @Column
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    private List<Role> roles;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, Gender gender) {
+    public User(String firstName, String lastName, int Age, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.gender = gender;
-    }
-
-    public User(String firstName, String lastName, Gender gender, String phoneNo, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.phoneNo = phoneNo;
+        this.Age = Age;
         this.email = email;
     }
 
 
-    public User(String firstName, String lastName, Gender gender, String phoneNo, String email,
-                String username, String password, Set<Role> roles) {
+    public User(String firstName, String lastName, int Age, String email, String password, List<Role> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.gender = gender;
-        this.phoneNo = phoneNo;
+        this.Age = Age;
         this.email = email;
-        this.username = username;
         this.password = password;
         this.roles = roles;
     }
@@ -82,20 +70,12 @@ public class User implements UserDetails {
         this.lastName = lastName;
     }
 
-    public Gender getGender() {
-        return gender;
+    public int getAge() {
+        return Age;
     }
 
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public String getPhoneNo() {
-        return phoneNo;
-    }
-
-    public void setPhoneNo(String phoneNo) {
-        this.phoneNo = phoneNo;
+    public void setAge(int age) {
+        this.Age = age;
     }
 
     public String getEmail() {
@@ -108,10 +88,6 @@ public class User implements UserDetails {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
     }
 
     @Override
@@ -134,10 +110,6 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRole();
@@ -147,23 +119,21 @@ public class User implements UserDetails {
         return password;
     }
 
+    @Override
+    public String getUsername() {
+        return getEmail();
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public Set<Role> getRole() {
+    public List<Role> getRole() {
         return roles;
     }
 
-    public void setRole(Set<Role> roles) {
+    public void setRole(List<Role> roles) {
         this.roles = roles;
-    }
-
-
-    @Override
-    public String toString() {
-        return this.getId() + " " + this.getFirstName() + " " + this.getLastName() + " " + this.getGender()
-                + " " + this.getPhoneNo() + " " + this.getEmail();
     }
 
 }

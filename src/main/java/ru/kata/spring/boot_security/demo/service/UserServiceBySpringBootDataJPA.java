@@ -46,10 +46,12 @@ public class UserServiceBySpringBootDataJPA implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = repository.findByUsername(username);
+        User user = repository.findByEmail(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
         return user;
     }
+
+
 }
