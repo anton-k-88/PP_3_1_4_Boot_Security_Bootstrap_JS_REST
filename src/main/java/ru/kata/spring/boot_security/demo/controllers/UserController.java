@@ -4,12 +4,17 @@ package ru.kata.spring.boot_security.demo.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleCrudRepository;
 import ru.kata.spring.boot_security.demo.service.UserService;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 public class UserController {
@@ -38,13 +43,16 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping("/edit/{userId}")
-    public ModelMap userEditPage(@PathVariable("userId") Long userId) {
-        ModelMap modelMap = new ModelMap();
-        modelMap.addAttribute("editinguser", userService.getUser(userId));
-        modelMap.addAttribute("roles", roleCrudRepository.findAllByRoleNameNotNull());
-        modelMap.addAttribute("user-id", userId);
-        return modelMap;
+//    @GetMapping("/edit/{userId}")
+//    public String getUserForEdit(@PathVariable("userId") Long userId, Model model) {
+//        model.addAttribute("editinguser", userService.getUser(userId));
+//        return "userr";
+//    }
+
+    @GetMapping("/allusers")
+    public String getAllUsers(Model model) {
+        model.addAttribute("allusers", userService.getUsersList());
+        return "admin";
     }
 
 //    @GetMapping("/edit/{userId}")
