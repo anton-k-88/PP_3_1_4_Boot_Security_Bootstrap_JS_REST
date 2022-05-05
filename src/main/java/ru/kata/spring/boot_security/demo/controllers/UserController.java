@@ -7,16 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleCrudRepository;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Controller
-public class userController {
+public class UserController {
 
     @Autowired
     private UserService userService;
@@ -47,6 +43,7 @@ public class userController {
         ModelMap modelMap = new ModelMap();
         modelMap.addAttribute("editinguser", userService.getUser(userId));
         modelMap.addAttribute("roles", roleCrudRepository.findAllByRoleNameNotNull());
+        modelMap.addAttribute("user-id", userId);
         return modelMap;
     }
 
