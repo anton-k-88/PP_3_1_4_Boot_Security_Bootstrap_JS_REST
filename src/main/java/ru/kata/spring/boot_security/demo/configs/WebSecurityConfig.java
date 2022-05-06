@@ -17,6 +17,8 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SuccessUserHandler successUserHandler;
+
+
     public WebSecurityConfig(SuccessUserHandler successUserHandler) {
         this.successUserHandler = successUserHandler;
     }
@@ -28,18 +30,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/index").permitAll()
-                .antMatchers("/login*").permitAll()
-                .antMatchers("/user").hasRole("USER")
-                .anyRequest().hasRole("ADMIN")
+                .antMatchers( "/login").permitAll()
+////                .antMatchers("/login").permitAll()
+                .antMatchers("/user").hasAuthority("ROLE_USER")
+//                .antMatchers("/").hasRole("ROLE_ADMIN")
+                .anyRequest().hasAuthority("ROLE_ADMIN")
+//                .anyRequest().denyAll()
+//                .anyRequest().permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/")
+                .loginPage("/login")
                 .loginProcessingUrl("/login")
-                .successHandler(successUserHandler).permitAll()
+//                .successForwardUrl("/")
+                  .successHandler(successUserHandler).permitAll()
                 .and()
                 .logout()
-     //           .logoutUrl("/logout")
+                //           .logoutUrl("/logout")
                 .logoutSuccessUrl("/");
     }
 
