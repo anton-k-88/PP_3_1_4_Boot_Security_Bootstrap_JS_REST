@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
+
 
 
 @Entity
@@ -20,7 +20,7 @@ public class User implements UserDetails {
     private String lastName;
     private int Age;
     private String email;
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String password;
     @Column
     @ManyToMany(fetch = FetchType.EAGER)
@@ -134,6 +134,11 @@ public class User implements UserDetails {
 
     public void setRole(List<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return this.getId() + " " + this.getFirstName() + " " + this.getLastName() + " " + this.getAge() + " " + this.getEmail();
     }
 
 }

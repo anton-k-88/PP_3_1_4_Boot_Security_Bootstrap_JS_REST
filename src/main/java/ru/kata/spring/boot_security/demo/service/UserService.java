@@ -20,4 +20,6 @@ public interface UserService extends UserDetailsService {
 
     List<User> getUsersList();
 
+    void saveAllUsers(List<User> userList);
+
 }

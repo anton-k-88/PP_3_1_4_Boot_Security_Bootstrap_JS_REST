@@ -53,5 +53,8 @@ public class UserServiceBySpringBootDataJPA implements UserService {
         return user;
     }
 
-
+    @Override
+    public void saveAllUsers(List<User> userList) {
+        repository.saveAll(userList);
+    }
 }
