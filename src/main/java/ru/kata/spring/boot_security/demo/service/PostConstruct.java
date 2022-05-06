@@ -8,17 +8,20 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleCrudRepository;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 
 @Component
 public class PostConstruct {
-    @Autowired
+
     private UserService userService;
-    @Autowired
     private RoleCrudRepository roleCrudRepository;
+
+    @Autowired
+    public PostConstruct(UserService userService, RoleCrudRepository roleCrudRepository) {
+        this.userService = userService;
+        this.roleCrudRepository = roleCrudRepository;
+    }
 
     @javax.annotation.PostConstruct
     public void init() {

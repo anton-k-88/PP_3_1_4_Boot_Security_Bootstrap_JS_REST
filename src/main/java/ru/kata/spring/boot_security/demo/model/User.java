@@ -9,18 +9,18 @@ import java.util.Collection;
 import java.util.List;
 
 
-
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
     private String firstName;
     private String lastName;
     private int Age;
     private String email;
-//    @Column(nullable = false)
+    //    @Column(nullable = false)
     private String password;
     @Column
     @ManyToMany(fetch = FetchType.EAGER)
