@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.model;
 
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,28 +15,19 @@ import java.util.List;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
     private String firstName;
     private String lastName;
     private int Age;
     private String email;
-    //    @Column(nullable = false)
+    @Column(nullable = false)
     private String password;
     @Column
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private List<Role> roles;
 
     public User() {
     }
-
-    public User(String firstName, String lastName, int Age, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.Age = Age;
-        this.email = email;
-    }
-
 
     public User(String firstName, String lastName, int Age, String email, String password, List<Role> roles) {
         this.firstName = firstName;
@@ -124,8 +116,12 @@ public class User implements UserDetails {
         return getEmail();
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String password) throws Exception {
+        if (password.isEmpty() || password == "") {
+            throw new Exception("Password can't be empty!");
+        } else {
+            this.password = password;
+        }
     }
 
     public List<Role> getRole() {
@@ -133,6 +129,14 @@ public class User implements UserDetails {
     }
 
     public void setRole(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 

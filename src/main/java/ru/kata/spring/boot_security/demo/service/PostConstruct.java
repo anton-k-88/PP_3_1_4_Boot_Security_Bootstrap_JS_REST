@@ -5,31 +5,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.repository.RoleCrudRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Component
 public class PostConstruct {
-
     private UserService userService;
-    private RoleCrudRepository roleCrudRepository;
+    private RoleService roleService;
 
     @Autowired
-    public PostConstruct(UserService userService, RoleCrudRepository roleCrudRepository) {
+    public PostConstruct(UserService userService, RoleService roleService) {
         this.userService = userService;
-        this.roleCrudRepository = roleCrudRepository;
+        this.roleService = roleService;
     }
 
     @javax.annotation.PostConstruct
     public void init() {
 
         Role roleAdmin = new Role("ROLE_ADMIN");
-        roleCrudRepository.save(roleAdmin);
+        roleService.saveRole(roleAdmin);
         Role roleUser = new Role("ROLE_USER");
-        roleCrudRepository.save(roleUser);
+        roleService.saveRole(roleUser);
 
         List<Role> roleSet1 = new ArrayList<>();
         roleSet1.add(roleAdmin);
@@ -39,7 +36,7 @@ public class PostConstruct {
         List<Role> roleSet3 = new ArrayList<>();
         roleSet3.add(roleUser);
         List<Role> roleSet4 = new ArrayList<>();
-        roleSet4.add(roleUser);
+        roleSet4.add(roleAdmin);
         List<Role> roleSet5 = new ArrayList<>();
         roleSet5.add(roleUser);
 

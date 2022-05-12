@@ -26,30 +26,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
-////                .antMatchers("/login").permitAll()
                 .antMatchers("/user").hasAuthority("ROLE_USER")
-//                .antMatchers("/").hasRole("ROLE_ADMIN")
                 .anyRequest().hasAuthority("ROLE_ADMIN")
-//                .anyRequest().denyAll()
-//                .anyRequest().permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
-//                .successForwardUrl("/")
                 .successHandler(successUserHandler).permitAll()
                 .and()
                 .logout()
-                //           .logoutUrl("/logout")
                 .logoutSuccessUrl("/");
     }
 
     @Override
     public void configure(WebSecurity web) {
         web.ignoring()
-                .antMatchers("/css/**");
+                .antMatchers("/css/**", "/js/**");
     }
 
     @Autowired
